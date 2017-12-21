@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import { ConnectedRouter } from 'react-router-redux';
 import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'react-router-redux'
 import { Route } from 'react-router';
 
 import App from 'components/App';
@@ -14,11 +14,11 @@ class Router extends Component {
       <Provider store={store}>
         <ConnectedRouter history={history}>
           <App>
-            <Route exact path="/" component={HomePage}/>
+            <Route exact path="/" component={HomePage} />
           </App>
         </ConnectedRouter>
       </Provider>
-    )
+    );
   }
 }
 
