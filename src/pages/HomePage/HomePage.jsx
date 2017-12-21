@@ -8,6 +8,6 @@ class HomePage extends Component {
       </div>
     );
   }
-};
+}
 
 export default HomePage;
