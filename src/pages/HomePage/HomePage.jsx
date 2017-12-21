@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 
+import Clock from 'components/Clock';
+
 class HomePage extends Component {
   render () {
     return (
       <div>
-        <h1>Home Page</h1>
+        <Clock />
       </div>
     );
   }
