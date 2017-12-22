@@ -29,6 +29,11 @@ export default (state = initialState, action) => {
         ...state,
         loading: false,
       };
+    case actionTypes.FETCH_WEATHER:
+      return {
+        list: action.payload.data.list,
+        ...state,
+      };
     default:
       return state;
   }

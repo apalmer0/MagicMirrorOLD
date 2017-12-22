@@ -14,6 +14,7 @@
     "test": "npm run lint && npm run mocha"
   },
   "dependencies": {
+    "axios": "^0.17.1",
     "babel-core": "^6.24.1",
     "babel-loader": "^6.4.1",
     "babel-preset-es2015": "^6.24.1",
@@ -28,6 +29,7 @@
     "history": "^4.7.2",
     "import-glob-loader": "^1.1.0",
     "lodash": "^4.17.4",
+    "moment": "^2.20.1",
     "node-sass": "^4.5.2",
     "postcss-loader": "^1.3.3",
     "prop-types": "^15.5.10",

@@ -1,5 +1,7 @@
 import API from 'api';
+import axios from 'axios';
 import config from 'redux/nodes/app/config';
+import constants from 'constants';
 
 const { actionTypes } = config;
 
@@ -33,4 +35,24 @@ const logout = () => {
   };
 };
 
-export default { login, logout };
+
+const fetchWeather = () => {
+  return (dispatch) => {
+    const CAMBRIDGE = 'Cambridge';
+    const WEATHER_API_KEY = '3122f191c21ed2ebad4ab7fde0f8636a';
+    const ROOT_URL = `http://api.openweathermap.org/data/2.5/forecast/daily/?appid=${WEATHER_API_KEY}`;
+    const city = CAMBRIDGE;
+    const count = '7';
+    const url = `${ROOT_URL}&q=${city},us&cnt=${count}`;
+    const request = axios.get(url);
+
+    request.then((response) => {
+      dispatch({
+        type: actionTypes.FETCH_WEATHER,
+        payload: response,
+      });
+    });
+  };
+};
+
+export default { fetchWeather, login, logout };
