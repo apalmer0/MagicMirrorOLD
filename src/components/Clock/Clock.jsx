@@ -3,13 +3,15 @@ import moment from 'moment';
 
 class Clock extends Component {
   state = {
+    day: moment().format('MMMM Do YYYY'),
     time: moment().format('h:mm a'),
   }
 
   setTime = () => {
-    const time = moment().format('h:mm a')
+    const day = moment().format('MMMM Do YYYY');
+    const time = moment().format('h:mm a');
 
-    this.setState({ time })
+    this.setState({ day, time })
   }
 
   componentWillMount () {
@@ -23,9 +25,14 @@ class Clock extends Component {
   }
 
   render () {
-    const { time } = this.state;
+    const { day, time } = this.state;
 
-    return <h1>{time}</h1>
+    return (
+      <div>
+        <p>{day}</p>
+        <h1>{time}</h1>
+      </div>
+    )
   }
 }
 
