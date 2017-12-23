@@ -31,7 +31,7 @@ export default (state = initialState, action) => {
       };
     case actionTypes.FETCH_WEATHER:
       return {
-        list: action.payload.data.list,
+        weather: action.payload.data,
         ...state,
       };
     default:

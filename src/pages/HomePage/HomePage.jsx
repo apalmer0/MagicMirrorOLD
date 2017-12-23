@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { func } from 'prop-types';
 
 import actions from 'redux/nodes/app/actions';
@@ -10,7 +9,9 @@ import Weather from 'components/Weather';
 
 class HomePage extends Component {
   componentWillMount () {
-    this.props.fetchWeather();
+    const { dispatch } = this.props;
+
+    return dispatch(actions.fetchWeather());
   }
 
   render () {
@@ -25,13 +26,7 @@ class HomePage extends Component {
 }
 
 HomePage.propTypes = {
-  fetchWeather: func.isRequired,
+  dispatch: func.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => {
-  const fetchWeather = actions.fetchWeather;
-
-  return bindActionCreators({ fetchWeather }, dispatch);
-};
-
-export default connect(null, mapDispatchToProps)(HomePage);
+export default connect()(HomePage);
