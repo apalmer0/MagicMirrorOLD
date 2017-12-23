@@ -24,6 +24,8 @@ const getPaddedArray = (arr) => {
 const getAverage = (data) => {
   const temps = filter(data, val => val.temp > 0).map(val => val.temp);
 
+  if (temps.length === 0) return '-';
+
   return round(sum(temps) / temps.length);
 };
 
@@ -41,7 +43,6 @@ const getTempObject = (weather, day) => {
     });
   });
 };
-
 
 export default {
   getAverage,

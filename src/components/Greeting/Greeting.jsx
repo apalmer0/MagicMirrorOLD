@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
-import styles from './styles'
-import { getGreetings } from './helpers'
+import styles from './styles';
+import { getGreetings } from './helpers';
 
 class Greeting extends Component {
   getGreeting = () => {
-    const allGreetings = getGreetings()
+    const allGreetings = getGreetings();
     const count = allGreetings.length;
     const index = Math.floor((Math.random() * count));
 
@@ -13,14 +13,14 @@ class Greeting extends Component {
   }
 
   render () {
-    const { greetingStyles } = styles
-    const greeting = this.getGreeting()
+    const { greetingStyles } = styles;
+    const greeting = this.getGreeting();
 
     return (
       <div style={greetingStyles}>
         <p>{greeting}</p>
       </div>
-    )
+    );
   }
 }
 

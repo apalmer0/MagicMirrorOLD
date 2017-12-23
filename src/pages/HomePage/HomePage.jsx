@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Col, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { func } from 'prop-types';
 
@@ -6,6 +7,7 @@ import actions from 'redux/nodes/app/actions';
 import Clock from 'components/Clock';
 import Greeting from 'components/Greeting';
 import Weather from 'components/Weather';
+import styles from './styles';
 
 class HomePage extends Component {
   componentWillMount () {
@@ -15,10 +17,18 @@ class HomePage extends Component {
   }
 
   render () {
+    const { halfPage } = styles;
+
     return (
       <div>
-        <Clock />
-        <Greeting />
+        <Row>
+          <Col md={6} style={halfPage}>
+            <Clock />
+          </Col>
+          <Col md={6} style={halfPage}>
+            <Greeting />
+          </Col>
+        </Row>
         <Weather />
       </div>
     );

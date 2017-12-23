@@ -5,6 +5,7 @@ import moment from 'moment';
 
 import helpers from './helpers';
 import Chart from '../Chart';
+import styles from './styles';
 
 const UNITS = 'F';
 
@@ -13,6 +14,7 @@ class Weather extends Component {
     const today = moment().format('dddd');
     const tomorrow = moment().add(1, 'day').format('dddd');
     const { weather } = this.props;
+    const { content, header } = styles;
     const { getAverage, getTempObject, getPaddedArray } = helpers;
 
     if (!weather) return false;
@@ -21,10 +23,10 @@ class Weather extends Component {
     const tempsTomorrow = getTempObject(weather, tomorrow);
 
     return (
-      <div>
-        <h1>today (avg: {getAverage(tempsToday)}° {UNITS})</h1>
+      <div style={content}>
+        <h1 style={header}>today (avg: {getAverage(tempsToday)}° {UNITS})</h1>
         <Chart data={getPaddedArray(tempsToday)} />
-        <h1>tomorrow (avg: {getAverage(tempsTomorrow)}° {UNITS})</h1>
+        <h1 style={header}>tomorrow (avg: {getAverage(tempsTomorrow)}° {UNITS})</h1>
         <Chart data={tempsTomorrow} />
       </div>
     );
