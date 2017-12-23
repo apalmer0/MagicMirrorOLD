@@ -18,7 +18,7 @@ app.use(webpackDevMiddleware(compiler, {
   historyApiFallback: true,
 }));
 
-const server = app.listen(8080, function() {
+const server = app.listen(process.env.PORT || 8080, function() {
   const host = server.address().address;
   const port = server.address().port;
   console.log('MagicMirror listening at http://%s:%s', host, port);
