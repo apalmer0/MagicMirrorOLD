@@ -5,7 +5,7 @@ import { func } from 'prop-types';
 
 import actions from 'redux/nodes/app/actions';
 import Clock from 'components/Clock';
-import Greeting from 'components/Greeting';
+import TodoList from 'components/TodoList';
 import Weather from 'components/Weather';
 import styles from './styles';
 
@@ -26,7 +26,7 @@ class HomePage extends Component {
             <Clock />
           </Col>
           <Col md={6} style={halfPage}>
-            <Greeting />
+            <TodoList />
           </Col>
         </Row>
         <Weather />
