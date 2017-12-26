@@ -1,7 +1,6 @@
 import API from 'api';
 import axios from 'axios';
 import config from 'redux/nodes/app/config';
-import constants from 'constants';
 
 const { actionTypes } = config;
 
@@ -37,11 +36,10 @@ const logout = () => {
 
 const fetchWeather = () => {
   return (dispatch) => {
-    const CAMBRIDGE = '23113';
-    const WEATHER_API_KEY = '3122f191c21ed2ebad4ab7fde0f8636a';
-    const ROOT_URL = `http://api.openweathermap.org/data/2.5/forecast?appid=${WEATHER_API_KEY}`;
-    const zip = CAMBRIDGE;
-    const url = `${ROOT_URL}&zip=${zip},us`;
+    const ZIPCODE = process.env.ZIPCODE;
+    const WEATHER_API_KEY = process.env.WEATHER_API_KEY;
+    const ROOT_URL = `https://api.openweathermap.org/data/2.5/forecast?appid=${WEATHER_API_KEY}`;
+    const url = `${ROOT_URL}&zip=${ZIPCODE},us`;
     const request = axios.get(url);
 
     request.then((response) => {
