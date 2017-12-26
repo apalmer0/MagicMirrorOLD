@@ -1,15 +1,21 @@
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+require('dotenv').config();
 
 const config = {
   env: process.env.NODE_ENV || 'development',
-  foo: process.env.FOO || 'webpack whaddup!',
+  todoist_api_key: process.env.TODOIST_API_KEY,
+  weather_api_key: process.env.WEATHER_API_KEY,
+  zipcode: process.env.ZIPCODE,
 };
 
 config.globals = {
   'process.env': {
     NODE_ENV: JSON.stringify(config.env),
+    TODOIST_API_KEY: JSON.stringify(config.todoist_api_key),
+    WEATHER_API_KEY: JSON.stringify(config.weather_api_key),
+    ZIPCODE: JSON.stringify(config.zipcode),
   },
   NODE_ENV: config.env,
 };
