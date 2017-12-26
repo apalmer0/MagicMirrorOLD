@@ -34,6 +34,11 @@ export default (state = initialState, action) => {
         weather: action.payload.data,
         ...state,
       };
+    case actionTypes.FETCH_TODO_ITEMS:
+      return {
+        todo: action.payload.data.items,
+        ...state,
+      };
     default:
       return state;
   }

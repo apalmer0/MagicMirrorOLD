@@ -11,6 +11,17 @@ import styles from './styles';
 
 class HomePage extends Component {
   componentWillMount () {
+    this.getTodoList();
+    this.getWeather();
+  }
+
+  getTodoList = () => {
+    const { dispatch } = this.props;
+
+    return dispatch(actions.fetchTodoItems('items'));
+  }
+
+  getWeather = () => {
     const { dispatch } = this.props;
 
     return dispatch(actions.fetchWeather());

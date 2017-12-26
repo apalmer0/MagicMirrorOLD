@@ -51,4 +51,22 @@ const fetchWeather = () => {
   };
 };
 
-export default { fetchWeather, login, logout };
+const fetchTodoItems = (resourceTypes) => {
+  return (dispatch) => {
+    const TODOIST_API_KEY = process.env.TODOIST_API_KEY;
+    const SYNC_TOKEN = '*';
+    const ROOT_URL = 'https://todoist.com/api/v7/sync';
+    const headers = `token=${TODOIST_API_KEY}&sync_token=${SYNC_TOKEN}&resource_types=["${resourceTypes}"]`;
+    const url = `${ROOT_URL}?${headers}`;
+    const request = axios.get(url);
+
+    request.then((response) => {
+      dispatch({
+        type: actionTypes.FETCH_TODO_ITEMS,
+        payload: response,
+      });
+    });
+  };
+};
+
+export default { fetchTodoItems, fetchWeather, login, logout };
