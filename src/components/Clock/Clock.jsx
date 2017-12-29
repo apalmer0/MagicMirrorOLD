@@ -14,7 +14,7 @@ class Clock extends Component {
   }
 
   componentDidMount () {
-    window.setInterval(() => {
+    global.window.setInterval(() => {
       this.setTime();
     }, 1000);
   }

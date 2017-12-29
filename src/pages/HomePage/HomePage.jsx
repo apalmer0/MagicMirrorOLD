@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 import { Col, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { func } from 'prop-types';
 
 import actions from 'redux/nodes/app/actions';
 import Clock from 'components/Clock';
+import storage from 'storage';
 import TodoList from 'components/TodoList';
 import Weather from 'components/Weather';
 import styles from './styles';
 
-const THREE_HOURS = 1000 * 60 * 60 * 3;
-const ONE_DAY = 1000 * 60 * 60 * 24;
+const ONE_HOUR = 1000 * 60 * 60 * 1;
+const TODOIST = 'Todoist';
+const WEATHER = 'Weather';
 
 class HomePage extends Component {
   componentWillMount () {
@@ -19,12 +22,12 @@ class HomePage extends Component {
   }
 
   componentDidMount () {
-    window.setInterval(() => this.getWeather(), THREE_HOURS);
-    window.setInterval(() => this.getTodoList(), ONE_DAY);
+    global.window.setInterval(() => this.refreshValues(), ONE_HOUR);
   }
 
   getTodoList = () => {
     console.log('getTodoList called');
+    storage.setItem(TODOIST, moment().format('dddd'));
     const { dispatch } = this.props;
 
     return dispatch(actions.fetchTodoItems('items'));
@@ -32,9 +35,23 @@ class HomePage extends Component {
 
   getWeather = () => {
     console.log('getWeather called');
+    storage.setItem(WEATHER, moment().format('h'));
     const { dispatch } = this.props;
 
     return dispatch(actions.fetchWeather());
+  }
+
+  refreshValues = () => {
+    const lastTodoistUpdate = storage.getItem(TODOIST);
+    const lastWeatherUpdate = storage.getItem(WEATHER);
+
+    if (moment().format('dddd') !== lastTodoistUpdate) {
+      this.getTodoList();
+    }
+
+    if (moment().format('h') !== lastWeatherUpdate) {
+      this.getWeather();
+    }
   }
 
   render () {
