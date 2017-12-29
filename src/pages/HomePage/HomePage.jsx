@@ -24,12 +24,14 @@ class HomePage extends Component {
   }
 
   getTodoList = () => {
+    console.log('getTodoList called');
     const { dispatch } = this.props;
 
     return dispatch(actions.fetchTodoItems('items'));
   }
 
   getWeather = () => {
+    console.log('getWeather called');
     const { dispatch } = this.props;
 
     return dispatch(actions.fetchWeather());
