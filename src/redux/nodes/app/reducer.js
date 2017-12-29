@@ -31,13 +31,13 @@ export default (state = initialState, action) => {
       };
     case actionTypes.FETCH_WEATHER:
       return {
-        weather: action.payload.data,
         ...state,
+        weather: action.payload.data,
       };
     case actionTypes.FETCH_TODO_ITEMS:
       return {
-        todo: action.payload.data.items,
         ...state,
+        todo: action.payload.data.items,
       };
     default:
       return state;

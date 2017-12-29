@@ -9,10 +9,18 @@ import TodoList from 'components/TodoList';
 import Weather from 'components/Weather';
 import styles from './styles';
 
+const THREE_HOURS = 1000 * 60 * 60 * 3;
+const ONE_DAY = 1000 * 60 * 60 * 24;
+
 class HomePage extends Component {
   componentWillMount () {
     this.getTodoList();
     this.getWeather();
+  }
+
+  componentDidMount () {
+    window.setInterval(() => this.getWeather(), THREE_HOURS);
+    window.setInterval(() => this.getTodoList(), ONE_DAY);
   }
 
   getTodoList = () => {
