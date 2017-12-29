@@ -35,7 +35,7 @@ class HomePage extends Component {
 
   getWeather = () => {
     console.log('getWeather called');
-    storage.setItem(WEATHER, moment().format('h'));
+    storage.setItem(WEATHER, moment().format('ha'));
     const { dispatch } = this.props;
 
     return dispatch(actions.fetchWeather());
@@ -49,7 +49,7 @@ class HomePage extends Component {
       this.getTodoList();
     }
 
-    if (moment().format('h') !== lastWeatherUpdate) {
+    if (moment().format('ha') !== lastWeatherUpdate) {
       this.getWeather();
     }
   }
