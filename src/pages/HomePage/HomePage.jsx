@@ -44,6 +44,7 @@ class HomePage extends Component {
   refreshValues = () => {
     const lastTodoistUpdate = storage.getItem(TODOIST);
     const lastWeatherUpdate = storage.getItem(WEATHER);
+    console.log('refreshValues');
 
     if (moment().format('dddd') !== lastTodoistUpdate) {
       this.getTodoList();
