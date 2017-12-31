@@ -36,7 +36,7 @@ const logout = () => {
 
 const fetchWeather = () => {
   return (dispatch) => {
-    const ZIPCODE = process.env.ZIPCODE;
+    const ZIPCODE = '02141';
     const WEATHER_API_KEY = process.env.WEATHER_API_KEY;
     const ROOT_URL = `https://api.openweathermap.org/data/2.5/forecast?appid=${WEATHER_API_KEY}`;
     const url = `${ROOT_URL}&zip=${ZIPCODE},us`;
