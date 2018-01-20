@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import { arrayOf, number, string } from 'prop-types';
+import { arrayOf, number, shape, string } from 'prop-types';
 import { connect } from 'react-redux';
 import { filter } from 'lodash';
 
@@ -44,11 +44,13 @@ class TodoList extends Component {
 }
 
 TodoList.propTypes = {
-  list: arrayOf({
-    content: string,
-    due_date_utc: string,
-    id: number,
-  }),
+  list: arrayOf(
+    shape({
+      content: string,
+      due_date_utc: string,
+      id: number,
+    }),
+  ),
 };
 
 TodoList.defaultProps = {
