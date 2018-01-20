@@ -12,8 +12,8 @@ import Weather from 'components/Weather';
 import styles from './styles';
 
 const ONE_HOUR = 1000 * 60 * 60 * 1;
-const TODOIST = 'Todoist';
-const WEATHER = 'Weather';
+const LAST_UPDATE = 'Last Update';
+const TIME_FORMAT = 'ha';
 
 class HomePage extends Component {
   componentWillMount () {
@@ -27,7 +27,6 @@ class HomePage extends Component {
 
   getTodoList = () => {
     console.log('getTodoList called');
-    storage.setItem(TODOIST, moment().format('dddd'));
     const { dispatch } = this.props;
 
     return dispatch(actions.fetchTodoItems('items'));
@@ -35,23 +34,19 @@ class HomePage extends Component {
 
   getWeather = () => {
     console.log('getWeather called');
-    storage.setItem(WEATHER, moment().format('ha'));
     const { dispatch } = this.props;
 
     return dispatch(actions.fetchWeather());
   }
 
   refreshValues = () => {
-    const lastTodoistUpdate = storage.getItem(TODOIST);
-    const lastWeatherUpdate = storage.getItem(WEATHER);
+    const lastUpdate = storage.getItem(LAST_UPDATE);
     console.log('refreshValues');
 
-    if (moment().format('dddd') !== lastTodoistUpdate) {
-      this.getTodoList();
-    }
-
-    if (moment().format('ha') !== lastWeatherUpdate) {
+    if (moment().format(TIME_FORMAT) !== lastUpdate) {
+      storage.setItem(LAST_UPDATE, moment().format(TIME_FORMAT));
       this.getWeather();
+      this.getTodoList();
     }
   }
 
