@@ -2,7 +2,7 @@ import API from 'api';
 import axios from 'axios';
 import config from 'redux/nodes/app/config';
 
-const { actionTypes } = config;
+const { actionTypes, hostname } = config;
 
 const loginRequest = { type: actionTypes.LOGIN_REQUEST };
 const loginFailure = { type: actionTypes.LOGIN_FAILURE };
@@ -37,7 +37,7 @@ const logout = () => {
 const fetchWeather = () => {
   return (dispatch) => {
     const ZIPCODE = '02141';
-    const WEATHER_API_KEY = process.env.WEATHER_API_KEY;
+    const { WEATHER_API_KEY } = process.env;
     const ROOT_URL = `https://api.openweathermap.org/data/2.5/forecast?appid=${WEATHER_API_KEY}`;
     const url = `${ROOT_URL}&zip=${ZIPCODE},us`;
     const request = axios.get(url);
@@ -51,14 +51,10 @@ const fetchWeather = () => {
   };
 };
 
-const fetchTodoItems = (resourceTypes) => {
+const fetchTodoItems = () => {
   return (dispatch) => {
-    const TODOIST_API_KEY = process.env.TODOIST_API_KEY;
-    const SYNC_TOKEN = '*';
-    const ROOT_URL = 'https://todoist.com/api/v7/sync';
-    const headers = `token=${TODOIST_API_KEY}&sync_token=${SYNC_TOKEN}&resource_types=["${resourceTypes}"]`;
-    const url = `${ROOT_URL}?${headers}`;
-    const request = axios.get(url);
+    const ROOT_URL = `${hostname}/api/items?due=today&status=incomplete`;
+    const request = axios.get(ROOT_URL);
 
     request.then((response) => {
       dispatch({

@@ -37,7 +37,7 @@ export default (state = initialState, action) => {
     case actionTypes.FETCH_TODO_ITEMS:
       return {
         ...state,
-        todo: action.payload.data.items,
+        todo: action.payload.data,
       };
     default:
       return state;

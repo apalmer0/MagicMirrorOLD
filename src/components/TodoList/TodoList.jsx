@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import { arrayOf, number, shape, string } from 'prop-types';
 import { connect } from 'react-redux';
-import { filter } from 'lodash';
 
 import TodoListItem from '../TodoListItem';
 import styles from './styles';
@@ -10,7 +9,16 @@ import styles from './styles';
 class TodoList extends Component {
   renderNoTasks = () => {
     const todayIsFriday = moment().format('dddd') === 'Friday';
-    const noTasksFriday = <iframe title="Friday" src="https://giphy.com/embed/l1BgT6CDFMPU5Ibtu" width="480" height="260" frameBorder="0" className="giphy-embed" allowFullScreen />;
+    const noTasksFriday = (
+      <iframe
+        allowFullScreen
+        className="giphy-embed"
+        frameBorder="0"
+        height="260"
+        src="https://giphy.com/embed/l1BgT6CDFMPU5Ibtu"
+        title="Friday"
+        width="480"
+      />);
     const noTasks = <div>no items found</div>;
 
     return todayIsFriday ? noTasksFriday : noTasks;
@@ -20,22 +28,12 @@ class TodoList extends Component {
     const { todoStyles } = styles;
     const { list } = this.props;
 
-    if (!list.length) return false;
-
-    const tasksToDo = filter(list, (item) => {
-      const dueDate = moment(item.due_date_utc).local();
-      const now = moment();
-      const due = dueDate.diff(now, 'days') <= 0;
-
-      return due;
-    });
-
     return (
       <div style={todoStyles}>
         <h1>To do today:</h1>
         {
-          tasksToDo.length
-            ? tasksToDo.map(task => <TodoListItem key={task.id} content={task.content} />)
+          list.length
+            ? list.map(task => <TodoListItem key={task.id} content={task.content} />)
             : this.renderNoTasks()
         }
       </div>
@@ -47,7 +45,7 @@ TodoList.propTypes = {
   list: arrayOf(
     shape({
       content: string,
-      due_date_utc: string,
+      due: string,
       id: number,
     }),
   ),

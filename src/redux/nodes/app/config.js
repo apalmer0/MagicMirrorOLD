@@ -9,6 +9,9 @@ const actionTypes = {
   LOGOUT_SUCCESS: 'LOGOUT_SUCCESS',
 };
 
+const hostname = process.env.NODE_ENV === 'production' ? 'https://magic-mirror-api.herokuapp.com' : 'http://localhost:3000';
+
 export default {
   actionTypes,
+  hostname,
 };

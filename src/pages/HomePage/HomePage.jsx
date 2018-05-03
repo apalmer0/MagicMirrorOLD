@@ -12,6 +12,7 @@ import Weather from 'components/Weather';
 import styles from './styles';
 
 const ONE_HOUR = 1000 * 60 * 60 * 1;
+const FIVE_SECONDS = 5000;
 const LAST_UPDATE = 'Last Update';
 const TIME_FORMAT = 'ha';
 
@@ -22,32 +23,24 @@ class HomePage extends Component {
   }
 
   componentDidMount () {
-    global.window.setInterval(() => this.refreshValues(), ONE_HOUR);
+    global.window.setInterval(() => this.getTodoList(), FIVE_SECONDS);
+    global.window.setInterval(() => this.getWeather(), ONE_HOUR);
   }
 
   getTodoList = () => {
-    console.log('getTodoList called');
     const { dispatch } = this.props;
 
-    return dispatch(actions.fetchTodoItems('items'));
+    return dispatch(actions.fetchTodoItems());
   }
 
   getWeather = () => {
-    console.log('getWeather called');
     const { dispatch } = this.props;
-
-    return dispatch(actions.fetchWeather());
-  }
-
-  refreshValues = () => {
     const lastUpdate = storage.getItem(LAST_UPDATE);
-    console.log('refreshValues');
 
-    if (moment().format(TIME_FORMAT) !== lastUpdate) {
-      storage.setItem(LAST_UPDATE, moment().format(TIME_FORMAT));
-      this.getWeather();
-      this.getTodoList();
-    }
+    if (moment().format(TIME_FORMAT) === lastUpdate) return false;
+
+    storage.setItem(LAST_UPDATE, moment().format(TIME_FORMAT));
+    return dispatch(actions.fetchWeather());
   }
 
   render () {
