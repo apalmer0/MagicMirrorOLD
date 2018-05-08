@@ -1,43 +1,49 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import {
+  arrayOf,
+  node,
+  number,
+  shape,
+  string,
+} from 'prop-types';
 
 import helpers from './helpers';
 
 class SparklinesClone extends PureComponent {
-  static propTypes = {
-    children: PropTypes.node,
-    dataObjects: PropTypes.array,
-    labels: PropTypes.array,
-    limit: PropTypes.number,
-    width: PropTypes.number,
-    height: PropTypes.number,
-    svgWidth: PropTypes.number,
-    svgHeight: PropTypes.number,
-    preserveAspectRatio: PropTypes.string,
-    margin: PropTypes.number,
-    style: PropTypes.object,
-    min: PropTypes.number,
-    max: PropTypes.number,
-  };
-
-  static defaultProps = {
-    dataObjects: [],
-    labels: [],
-    width: 240,
-    height: 60,
-    // Scale the graphic content of the given element non-uniformly if necessary such that the element's bounding box exactly matches the viewport rectangle.
-    preserveAspectRatio: 'none', // https://www.w3.org/TR/SVG/coords.html#PreserveAspectRatioAttribute
-    margin: 2,
-  };
-
   render() {
-    const { children, dataObjects, limit, width, height, svgWidth, svgHeight, preserveAspectRatio, margin, style, max, min } = this.props;
-    const data = dataObjects.map(val => val.temp);
+    const {
+      children,
+      dataObjects,
+      height,
+      limit,
+      margin,
+      max,
+      min,
+      preserveAspectRatio,
+      style,
+      svgHeight,
+      svgWidth,
+      width,
+    } = this.props;
+    const data = dataObjects.map((val) => {
+      const { temp, precip } = val;
+
+      return { temp, precip };
+    });
+
     const labels = dataObjects.map(val => val.time);
 
     if (dataObjects.length === 0) return null;
 
-    const points = helpers.dataToPoints({ data, limit, width, height, margin, max, min });
+    const points = helpers.dataToPoints({
+      data,
+      height,
+      limit,
+      margin,
+      max,
+      min,
+      width,
+    });
     const viewBox = `0 0 ${width} ${height + 10}`;
     const svgOpts = { style, viewBox, preserveAspectRatio };
 
@@ -48,12 +54,57 @@ class SparklinesClone extends PureComponent {
       <svg {...svgOpts}>
         {
           React.Children.map(children, (child) => {
-            return React.cloneElement(child, { data, points, width, height, margin, labels });
+            return React.cloneElement(child, {
+              data,
+              height,
+              labels,
+              margin,
+              points,
+              width,
+            });
           })
         }
       </svg>
     );
   }
 }
+
+SparklinesClone.propTypes = {
+  children: node.isRequired,
+  dataObjects: arrayOf(shape({
+    precip: number,
+    temp: number,
+    time: string,
+  })),
+  height: number,
+  labels: arrayOf(string),
+  limit: number,
+  margin: number,
+  max: number,
+  min: number,
+  preserveAspectRatio: string,
+  style: shape({
+    fill: string,
+  }),
+  svgHeight: number,
+  svgWidth: number,
+  width: number,
+};
+
+SparklinesClone.defaultProps = {
+  dataObjects: [],
+  height: 60,
+  labels: [],
+  limit: 0,
+  margin: 2,
+  max: 0,
+  min: 0,
+  // Scale the graphic content of the given element non-uniformly if necessary such that the element's bounding box exactly matches the viewport rectangle.
+  preserveAspectRatio: 'none', // https://www.w3.org/TR/SVG/coords.html#PreserveAspectRatioAttribute
+  svgHeight: 0,
+  svgWidth: 0,
+  style: {},
+  width: 240,
+};
 
 export default SparklinesClone;

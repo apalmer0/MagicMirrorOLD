@@ -1,13 +1,6 @@
 import { filter, round, sum } from 'lodash';
 import moment from 'moment';
 
-const kelvinToFarenheit = (kelvin) => {
-  const constant = 459.67;
-  const multiplier = kelvin * (9 / 5);
-
-  return Math.floor(multiplier - constant);
-};
-
 const getPaddedArray = (arr) => {
   const emptyObject = {
     time: '',
@@ -29,17 +22,29 @@ const getAverage = (data) => {
   return round(sum(temps) / temps.length);
 };
 
-const matchDayname = (utc, target) => {
-  return moment.unix(utc).format('dddd') === target;
+const matchDayname = (unix, target) => {
+  return moment.unix(unix).format('dddd') === target &&
+    moment.unix(unix).isAfter(moment());
 };
 
+const convertUnix = time => (
+  moment.unix(time).local().format('ha')
+);
+
 const getTempObject = (weather, day) => {
-  return filter(weather.list, (temp) => {
-    return matchDayname(temp.dt, day);
-  }).map((val) => {
+  return filter(weather, ({ unix_time: unixTime }) => {
+    return matchDayname(unixTime, day);
+  }).map((matchingTempObject) => {
+    const {
+      precip_chance: precipChance,
+      temperature,
+      unix_time: unixTime,
+    } = matchingTempObject;
+
     return ({
-      temp: kelvinToFarenheit(val.main.temp),
-      time: moment.unix(val.dt).local().format('ha'),
+      temp: temperature,
+      precip: precipChance,
+      time: convertUnix(unixTime),
     });
   });
 };
@@ -48,6 +53,5 @@ export default {
   getAverage,
   getPaddedArray,
   getTempObject,
-  kelvinToFarenheit,
   matchDayname,
 };

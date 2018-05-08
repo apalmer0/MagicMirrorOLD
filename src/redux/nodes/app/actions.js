@@ -36,10 +36,7 @@ const logout = () => {
 
 const fetchWeather = () => {
   return (dispatch) => {
-    const ZIPCODE = '02141';
-    const { WEATHER_API_KEY } = process.env;
-    const ROOT_URL = `https://api.openweathermap.org/data/2.5/forecast?appid=${WEATHER_API_KEY}`;
-    const url = `${ROOT_URL}&zip=${ZIPCODE},us`;
+    const url = `${hostname}/api/forecast_items`;
     const request = axios.get(url);
 
     request.then((response) => {

@@ -1,23 +1,23 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import {
+  arrayOf,
+  number,
+  object,
+  shape,
+  string,
+} from 'prop-types';
 
 export default class Barchart extends Component {
-  static propTypes = {
-    barWidth: PropTypes.number,
-    data: PropTypes.arrayOf(PropTypes.number),
-    labels: PropTypes.arrayOf(PropTypes.string),
-    height: PropTypes.number,
-    margin: PropTypes.number,
-    points: PropTypes.arrayOf(PropTypes.object),
-    style: PropTypes.object,
-  };
-
-  static defaultProps = {
-    style: { fill: 'slategray' },
-  };
-
   render() {
-    const { data, points, height, style, barWidth, margin, labels } = this.props;
+    const {
+      barWidth,
+      data,
+      height,
+      labels,
+      margin,
+      points,
+      style,
+    } = this.props;
     const strokeWidth = 1 * ((style && style.strokeWidth) || 0);
     const marginWidth = margin ? 2 * margin : 0;
     const width =
@@ -44,11 +44,12 @@ export default class Barchart extends Component {
             ...textProps,
             y: point.y + Number(FONTSIZE),
           };
+          const { temp, precip } = data[index];
 
           return (
             <g key={point.x}>
               {
-                data[index] > 0 &&
+                temp > 0 &&
                   <rect
                     x={point.x}
                     y={-height - 5}
@@ -58,7 +59,7 @@ export default class Barchart extends Component {
                   />
               }
               <text {...dataProps}>
-                {data[index] > 0 ? `${data[index]}°` : '' }
+                {temp > 0 ? `${temp}° - ${precip}%` : '' }
               </text>
               <text {...timeProps}>{labels[index]}</text>
             </g>
@@ -68,3 +69,28 @@ export default class Barchart extends Component {
     );
   }
 }
+
+Barchart.propTypes = {
+  barWidth: number,
+  data: arrayOf(shape({
+    temp: number,
+    precip: number,
+  })),
+  labels: arrayOf(string),
+  height: number,
+  margin: number,
+  points: arrayOf(object),
+  style: shape({
+    fill: string,
+  }),
+};
+
+Barchart.defaultProps = {
+  barWidth: 0,
+  data: [{}],
+  height: 0,
+  labels: [],
+  margin: 0,
+  points: [],
+  style: { fill: 'slategray' },
+};

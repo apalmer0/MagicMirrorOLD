@@ -1,20 +1,16 @@
 import React, { Component } from 'react';
-import moment from 'moment';
 import { Col, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { func } from 'prop-types';
 
 import actions from 'redux/nodes/app/actions';
 import Clock from 'components/Clock';
-import storage from 'storage';
 import TodoList from 'components/TodoList';
 import Weather from 'components/Weather';
 import styles from './styles';
 
 const ONE_HOUR = 1000 * 60 * 60 * 1;
 const FIVE_SECONDS = 5000;
-const LAST_UPDATE = 'Last Update';
-const TIME_FORMAT = 'ha';
 
 class HomePage extends Component {
   componentWillMount () {
@@ -35,11 +31,7 @@ class HomePage extends Component {
 
   getWeather = () => {
     const { dispatch } = this.props;
-    const lastUpdate = storage.getItem(LAST_UPDATE);
 
-    if (moment().format(TIME_FORMAT) === lastUpdate) return false;
-
-    storage.setItem(LAST_UPDATE, moment().format(TIME_FORMAT));
     return dispatch(actions.fetchWeather());
   }
 

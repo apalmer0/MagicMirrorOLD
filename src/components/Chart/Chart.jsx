@@ -24,12 +24,11 @@ class Chart extends Component {
 }
 
 Chart.propTypes = {
-  data: arrayOf(
-    shape({
-      time: string,
-      temp: number,
-    }),
-  ).isRequired,
+  data: arrayOf(shape({
+    precip: number,
+    temp: number,
+    time: string,
+  })).isRequired,
 };
 
 export default Chart;

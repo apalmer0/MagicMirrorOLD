@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { arrayOf, number, shape } from 'prop-types';
+import { arrayOf, number, shape, string } from 'prop-types';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
@@ -34,19 +34,16 @@ class Weather extends Component {
 }
 
 Weather.propTypes = {
-  weather: shape({
-    list: arrayOf(
-      shape({
-        main: shape({
-          temp: number,
-        }),
-      }),
-    ),
-  }),
+  weather: arrayOf(shape({
+    id: number,
+    precip_chance: number,
+    temperature: number,
+    unix_time: string,
+  })),
 };
 
 Weather.defaultProps = {
-  weather: {},
+  weather: [],
 };
 
 const mapStateToProps = (state) => {

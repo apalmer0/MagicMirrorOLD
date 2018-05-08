@@ -1,17 +1,23 @@
 import _ from 'lodash';
 
 const dataToPoints = (props) => {
-  const { data, width = 1, height = 1, margin = 0 } = props;
-  const max = _.max(data);
-  const min = _.min(data);
-  const count = data.length;
+  const {
+    data,
+    height = 1,
+    margin = 0,
+    width = 1,
+  } = props;
+  const tempsArray = data.map(val => val.temp);
+  const max = _.max(tempsArray);
+  const min = _.min(tempsArray);
+  const count = tempsArray.length;
 
   const barWidth = (width - (margin * (count + 1))) / count;
-  const barHeight = (height - margin * 2) / ((max - min) || 2);
+  const barHeight = (height - (margin * 2)) / ((max - min) || 2);
 
-  return data.map((d, i) => ({
+  return tempsArray.map((d, i) => ({
     x: (i * barWidth) + ((i + 1) * margin),
-    y: (max === min ? 1 : (max - d)) * barHeight + margin,
+    y: ((max === min ? 1 : (max - d)) * barHeight) + margin,
   }));
 };
 
