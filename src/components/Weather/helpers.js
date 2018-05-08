@@ -24,7 +24,7 @@ const getAverage = (data) => {
 
 const matchDayname = (unix, target) => {
   return moment.unix(unix).format('dddd') === target &&
-    moment.unix(unix).isAfter(moment());
+    moment.unix(unix).isAfter(moment().subtract(2, 'hours'));
 };
 
 const convertUnix = time => (
