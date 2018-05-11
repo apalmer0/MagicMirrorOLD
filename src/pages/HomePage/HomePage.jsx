@@ -5,6 +5,7 @@ import { func } from 'prop-types';
 
 import actions from 'redux/nodes/app/actions';
 import Clock from 'components/Clock';
+import Images from 'components/Images';
 import TodoList from 'components/TodoList';
 import Weather from 'components/Weather';
 import styles from './styles';
@@ -14,13 +15,21 @@ const FIVE_SECONDS = 5000;
 
 class HomePage extends Component {
   componentWillMount () {
+    this.getImages();
     this.getTodoList();
     this.getWeather();
   }
 
   componentDidMount () {
+    global.window.setInterval(() => this.getImages(), FIVE_SECONDS);
     global.window.setInterval(() => this.getTodoList(), FIVE_SECONDS);
     global.window.setInterval(() => this.getWeather(), ONE_HOUR);
+  }
+
+  getImages = () => {
+    const { dispatch } = this.props;
+
+    return dispatch(actions.fetchImages());
   }
 
   getTodoList = () => {
@@ -48,6 +57,7 @@ class HomePage extends Component {
             <TodoList />
           </Col>
         </Row>
+        <Images />
         <Weather />
       </div>
     );

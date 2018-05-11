@@ -62,4 +62,24 @@ const fetchTodoItems = () => {
   };
 };
 
-export default { fetchTodoItems, fetchWeather, login, logout };
+const fetchImages = () => {
+  return (dispatch) => {
+    const ROOT_URL = `${hostname}/api/images`;
+    const request = axios.get(ROOT_URL);
+
+    request.then((response) => {
+      dispatch({
+        type: actionTypes.FETCH_IMAGES,
+        payload: response,
+      });
+    });
+  };
+};
+
+export default {
+  fetchImages,
+  fetchTodoItems,
+  fetchWeather,
+  login,
+  logout,
+};

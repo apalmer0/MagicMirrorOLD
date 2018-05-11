@@ -29,15 +29,20 @@ export default (state = initialState, action) => {
         ...state,
         loading: false,
       };
-    case actionTypes.FETCH_WEATHER:
+    case actionTypes.FETCH_IMAGES:
       return {
         ...state,
-        weather: action.payload.data,
+        images: action.payload.data,
       };
     case actionTypes.FETCH_TODO_ITEMS:
       return {
         ...state,
         todo: action.payload.data,
+      };
+    case actionTypes.FETCH_WEATHER:
+      return {
+        ...state,
+        weather: action.payload.data,
       };
     default:
       return state;

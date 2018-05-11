@@ -1,3 +1,5 @@
+@import 'node_modules/react-image-gallery/styles/scss/image-gallery';
+
 body {
   background-color: $black;
   font-family: 'Montserrat', sans-serif;
@@ -6,4 +8,13 @@ body {
 
 .app {
   color: $white;
+}
+
+.image-gallery-slide img {
+  height: 500px;
+  width: auto;
+}
+
+.image-gallery-slide {
+  background-color: $black;
 }
