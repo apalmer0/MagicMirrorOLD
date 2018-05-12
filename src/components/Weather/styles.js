@@ -3,6 +3,6 @@ export default {
     textAlign: 'center',
   },
   content: {
-    marginTop: '75%',
+    marginTop: '30%',
   },
 };
