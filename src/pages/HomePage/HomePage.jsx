@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import { arrayOf, number, shape, string, func } from 'prop-types';
 import { Col, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { func } from 'prop-types';
 
 import actions from 'redux/nodes/app/actions';
 import Clock from 'components/Clock';
+import GoogleImages from 'components/GoogleImages';
 import Images from 'components/Images';
 import TodoList from 'components/TodoList';
 import Weather from 'components/Weather';
@@ -15,40 +16,40 @@ const FIVE_SECONDS = 5000;
 
 class HomePage extends Component {
   componentWillMount () {
-    this.getImages();
+    this.getGoogleImages();
     this.getTodoList();
+    this.getTwilioImages();
     this.getWeather();
   }
 
   componentDidMount () {
-    global.window.setInterval(() => this.getImages(), FIVE_SECONDS);
+    global.window.setInterval(() => this.getGoogleImages(), FIVE_SECONDS);
     global.window.setInterval(() => this.getTodoList(), FIVE_SECONDS);
+    global.window.setInterval(() => this.getTwilioImages(), FIVE_SECONDS);
     global.window.setInterval(() => this.getWeather(), ONE_HOUR);
   }
 
-  getImages = () => {
-    const { dispatch } = this.props;
+  getGoogleImages = () => (
+    this.props.dispatch(actions.fetchGoogleImages())
+  )
 
-    return dispatch(actions.fetchImages());
-  }
+  getTodoList = () => (
+    this.props.dispatch(actions.fetchTodoItems())
+  )
 
-  getTodoList = () => {
-    const { dispatch } = this.props;
+  getTwilioImages = () => (
+    this.props.dispatch(actions.fetchTwilioImages())
+  )
 
-    return dispatch(actions.fetchTodoItems());
-  }
+  getWeather = () => (
+    this.props.dispatch(actions.fetchWeather())
+  )
 
-  getWeather = () => {
-    const { dispatch } = this.props;
-
-    return dispatch(actions.fetchWeather());
-  }
-
-  render () {
-    const { halfPage } = styles;
+  homepageContent = () => {
+    const { halfPage, homepageContainer } = styles;
 
     return (
-      <div>
+      <div style={homepageContainer}>
         <Row>
           <Col md={6} style={halfPage}>
             <Clock />
@@ -61,11 +62,41 @@ class HomePage extends Component {
         <Weather />
       </div>
     );
+  };
+
+  render () {
+    const { googleImages } = this.props;
+    const { homepageContent } = this;
+
+    return (
+      <div>
+        { googleImages.length > 0 ? <GoogleImages /> : homepageContent() }
+      </div>
+    );
   }
 }
 
 HomePage.propTypes = {
   dispatch: func.isRequired,
+  googleImages: arrayOf(shape({
+    caption: string,
+    created_at: string,
+    from_number: string,
+    id: number,
+    query: string,
+    updated_at: string,
+    url: string,
+  })),
 };
 
-export default connect()(HomePage);
+HomePage.defaultProps = {
+  googleImages: [],
+};
+
+const mapStateToProps = (state) => {
+  const { googleImages } = state.app;
+
+  return { googleImages };
+};
+
+export default connect(mapStateToProps)(HomePage);

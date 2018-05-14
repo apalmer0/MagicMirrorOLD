@@ -39,6 +39,7 @@ Images.propTypes = {
     created_at: string,
     from_number: string,
     id: number,
+    query: string,
     updated_at: string,
     url: string,
   })),
@@ -49,7 +50,7 @@ Images.defaultProps = {
 };
 
 const mapStateToProps = (state) => {
-  const { images } = state.app;
+  const { twilioImages: images } = state.app;
 
   return { images };
 };

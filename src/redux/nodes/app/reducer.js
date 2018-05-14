@@ -29,10 +29,15 @@ export default (state = initialState, action) => {
         ...state,
         loading: false,
       };
-    case actionTypes.FETCH_IMAGES:
+    case actionTypes.FETCH_TWILIO_IMAGES:
       return {
         ...state,
-        images: action.payload.data,
+        twilioImages: action.payload.data,
+      };
+    case actionTypes.FETCH_GOOGLE_IMAGES:
+      return {
+        ...state,
+        googleImages: action.payload.data,
       };
     case actionTypes.FETCH_TODO_ITEMS:
       return {

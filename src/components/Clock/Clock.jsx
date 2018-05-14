@@ -10,13 +10,13 @@ class Clock extends Component {
   }
 
   componentWillMount () {
-    this.setTime();
+    const intervalId = setInterval(() => this.setTime(), 1000);
+
+    this.setState({ intervalId });
   }
 
-  componentDidMount () {
-    global.window.setInterval(() => {
-      this.setTime();
-    }, 1000);
+  componentWillUnmount() {
+    clearInterval(this.state.intervalId);
   }
 
   setTime = () => {
