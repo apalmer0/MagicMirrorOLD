@@ -66,7 +66,10 @@ class HomePage extends Component {
 
   render () {
     const { googleImages } = this.props;
-    const { homepageContent } = this;
+
+    const {
+      homepageContent,
+    } = this;
 
     return (
       <div>
