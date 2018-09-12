@@ -1,7 +1,10 @@
 import config from 'redux/nodes/app/config';
 
 const { actionTypes } = config;
-export const initialState = { session: {}, loading: false };
+export const initialState = {
+  session: {},
+  loading: false,
+};
 
 export default (state = initialState, action) => {
   switch (action.type) {
