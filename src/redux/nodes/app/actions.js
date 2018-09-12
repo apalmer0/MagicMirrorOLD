@@ -11,7 +11,9 @@ const loginSuccess = (jwt) => {
 };
 
 const logoutRequest = { type: actionTypes.LOGOUT_REQUEST };
+
 const logoutFailure = { type: actionTypes.LOGOUT_FAILURE };
+
 const logoutSuccess = { type: actionTypes.LOGOUT_FAILURE };
 
 const login = ({ email, password }) => {
