@@ -29,11 +29,6 @@ export default (state = initialState, action) => {
         ...state,
         loading: false,
       };
-    case actionTypes.FETCH_TWILIO_IMAGES:
-      return {
-        ...state,
-        twilioImages: action.payload.data,
-      };
     case actionTypes.FETCH_GOOGLE_IMAGES:
       return {
         ...state,

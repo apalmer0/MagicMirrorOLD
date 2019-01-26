@@ -62,20 +62,6 @@ const fetchTodoItems = () => {
   };
 };
 
-const fetchTwilioImages = () => {
-  return (dispatch) => {
-    const ROOT_URL = `${hostname}/api/images?image_source=twilio`;
-    const request = axios.get(ROOT_URL);
-
-    request.then((response) => {
-      dispatch({
-        type: actionTypes.FETCH_TWILIO_IMAGES,
-        payload: response,
-      });
-    });
-  };
-};
-
 const fetchGoogleImages = () => {
   return (dispatch) => {
     const ROOT_URL = `${hostname}/api/images?image_source=google`;
@@ -93,7 +79,6 @@ const fetchGoogleImages = () => {
 export default {
   fetchGoogleImages,
   fetchTodoItems,
-  fetchTwilioImages,
   fetchWeather,
   login,
   logout,

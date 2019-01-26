@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import actions from 'redux/nodes/app/actions';
 import Clock from 'components/Clock';
 import GoogleImages from 'components/GoogleImages';
-import Images from 'components/Images';
 import TodoList from 'components/TodoList';
 import Weather from 'components/Weather';
 import styles from './styles';
@@ -18,14 +17,12 @@ class HomePage extends Component {
   componentWillMount () {
     this.getGoogleImages();
     this.getTodoList();
-    this.getTwilioImages();
     this.getWeather();
   }
 
   componentDidMount () {
     global.window.setInterval(() => this.getGoogleImages(), FIVE_SECONDS);
     global.window.setInterval(() => this.getTodoList(), FIVE_SECONDS);
-    global.window.setInterval(() => this.getTwilioImages(), FIVE_SECONDS);
     global.window.setInterval(() => this.getWeather(), ONE_HOUR);
   }
 
@@ -35,10 +32,6 @@ class HomePage extends Component {
 
   getTodoList = () => (
     this.props.dispatch(actions.fetchTodoItems())
-  )
-
-  getTwilioImages = () => (
-    this.props.dispatch(actions.fetchTwilioImages())
   )
 
   getWeather = () => (
@@ -58,7 +51,6 @@ class HomePage extends Component {
             <TodoList />
           </Col>
         </Row>
-        <Images />
         <Weather />
       </div>
     );
