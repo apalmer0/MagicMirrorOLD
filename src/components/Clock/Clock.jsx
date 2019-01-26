@@ -5,7 +5,8 @@ import styles from './styles';
 
 class Clock extends Component {
   state = {
-    day: moment().format('MMMM Do YYYY'),
+    date: moment().format('MMMM Do YYYY'),
+    day: moment().format('dddd'),
     time: moment().format('h:mm a'),
   }
 
@@ -20,19 +21,21 @@ class Clock extends Component {
   }
 
   setTime = () => {
-    const day = moment().format('MMMM Do YYYY');
+    const date = moment().format('MMMM Do YYYY');
+    const day = moment().format('dddd');
     const time = moment().format('h:mm a');
 
-    this.setState({ day, time });
+    this.setState({ date, day, time });
   }
 
   render () {
-    const { day, time } = this.state;
-    const { dayStyles, timeStyles } = styles;
+    const { date, day, time } = this.state;
+    const { dateStyles, dayStyles, timeStyles } = styles;
 
     return (
       <div>
         <p style={dayStyles}>{day}</p>
+        <p style={dateStyles}>{date}</p>
         <p style={timeStyles}>{time}</p>
       </div>
     );
