@@ -11,7 +11,8 @@
     "lint": "yarn run eslint '**/*.js'",
     "mocha": "NODE_PATH=./src mocha --compilers babel-core/register --require src/test/.setup.js --recursive './{,!(node_modules)/**/}*.tests.js*'",
     "start": "npm run build && node server.js",
-    "test": "npm run lint && npm run mocha"
+    "test": "npm run lint && npm run mocha",
+    "heroku-postbuild": "echo Skip build on Heroku"
   },
   "dependencies": {
     "axios": "^0.17.1",
@@ -69,5 +70,6 @@
     "redux-mock-store": "^1.2.3",
     "tslint": "^5.9.1",
     "tslint-react": "^3.5.1"
-  }
+  },
+  "heroku-run-build-script": true
 }
