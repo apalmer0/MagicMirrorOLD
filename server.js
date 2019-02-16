@@ -8,7 +8,10 @@ const app = express();
 const compiler = webpack(webpackConfig);
 
 if (process.env.NODE_ENV === 'production') {
+  const { PORT } = process.env;
+
   app.use(express.static(path.join(__dirname, '/dist')));
+  app.listen(PORT, () => console.log(`Listening on ${PORT}`));
 } else {
   app.use(webpackDevMiddleware(compiler, {
     hot: true,
