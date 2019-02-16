@@ -3,6 +3,8 @@ export default {
     textAlign: 'center',
   },
   content: {
-    marginTop: '30%',
+    bottom: '0',
+    position: 'absolute',
+    width: '100%',
   },
 };
