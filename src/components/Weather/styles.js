@@ -5,6 +5,6 @@ export default {
   content: {
     bottom: '0',
     position: 'absolute',
-    width: '100%',
+    width: '98%',
   },
 };
