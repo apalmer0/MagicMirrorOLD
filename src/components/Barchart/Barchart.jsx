@@ -7,6 +7,8 @@ import {
   string,
 } from 'prop-types';
 
+import { shadeOfBlue } from './helpers';
+
 export default class Barchart extends Component {
   render() {
     const {
@@ -44,7 +46,13 @@ export default class Barchart extends Component {
             ...textProps,
             y: point.y + Number(FONTSIZE),
           };
+          const precipProps = {
+            ...textProps,
+            y: point.y + Number(FONTSIZE),
+            x: point.x + 9,
+          };
           const { temp, precip } = data[index];
+          const fill = shadeOfBlue(precip);
 
           return (
             <g key={point.x}>
@@ -55,11 +63,14 @@ export default class Barchart extends Component {
                     y={-height - 5}
                     width={width}
                     height={Math.max(0, height - point.y)}
-                    style={style}
+                    style={{ fill }}
                   />
               }
               <text {...dataProps}>
-                {temp > 0 ? `${temp}° - ${precip}%` : '' }
+                {temp > 0 ? `${temp}°` : '' }
+              </text>
+              <text {...precipProps}>
+                {precip >= 0 ? `🌧️${precip}%` : '' }
               </text>
               <text {...timeProps}>{labels[index]}</text>
             </g>
