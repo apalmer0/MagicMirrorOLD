@@ -70,7 +70,7 @@ export default class Barchart extends Component {
                 {temp > 0 ? `${temp}°` : '' }
               </text>
               <text {...precipProps}>
-                {precip >= 0 ? `🌧️${precip}%` : '' }
+                {precip >= 0 ? `☔️${precip}%` : '' }
               </text>
               <text {...timeProps}>{labels[index]}</text>
             </g>
