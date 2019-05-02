@@ -7,6 +7,7 @@ import actions from 'redux/nodes/app/actions';
 import Clock from 'components/Clock';
 import GoogleImages from 'components/GoogleImages';
 import TodoList from 'components/TodoList';
+import Trivia from 'components/Trivia';
 import Weather from 'components/Weather';
 import styles from './styles';
 
@@ -17,12 +18,14 @@ class HomePage extends Component {
   componentWillMount () {
     this.getGoogleImages();
     this.getTodoList();
+    this.getTrivia();
     this.getWeather();
   }
 
   componentDidMount () {
     global.window.setInterval(() => this.getGoogleImages(), FIVE_SECONDS);
     global.window.setInterval(() => this.getTodoList(), FIVE_SECONDS);
+    global.window.setInterval(() => this.getTrivia(), FIVE_SECONDS);
     global.window.setInterval(() => this.getWeather(), ONE_HOUR);
   }
 
@@ -32,6 +35,10 @@ class HomePage extends Component {
 
   getTodoList = () => (
     this.props.dispatch(actions.fetchTodoItems())
+  )
+
+  getTrivia = () => (
+    this.props.dispatch(actions.fetchTriviaItems())
   )
 
   getWeather = () => (
@@ -50,6 +57,9 @@ class HomePage extends Component {
           <Col md={6} style={halfPage}>
             <TodoList />
           </Col>
+        </Row>
+        <Row>
+          <Trivia />
         </Row>
         <Weather />
       </div>

@@ -42,13 +42,11 @@ class TodoList extends Component {
 }
 
 TodoList.propTypes = {
-  list: arrayOf(
-    shape({
-      content: string,
-      due: string,
-      id: number,
-    }),
-  ),
+  list: arrayOf(shape({
+    content: string,
+    due: string,
+    id: number,
+  })),
 };
 
 TodoList.defaultProps = {
