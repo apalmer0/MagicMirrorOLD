@@ -1,4 +1,7 @@
 export default {
+  containerStyles: {
+    marginBottom: '40px',
+  },
   headerStyles: {
     marginBottom: '10px',
   },
@@ -12,5 +15,12 @@ export default {
   },
   questionStyles: {
     fontStyle: 'italic',
+  },
+  answerContainerStyles: {
+    marginTop: '5px',
+  },
+  statusStyles: {
+    fontWeight: 'bold',
+    fontSize: '20px',
   },
 };

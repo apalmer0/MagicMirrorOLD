@@ -64,7 +64,7 @@ const fetchTodoItems = () => {
 
 const fetchTriviaItems = () => {
   return (dispatch) => {
-    const ROOT_URL = `${hostname}/api/trivia_items?status=unanswered&limit=1`;
+    const ROOT_URL = `${hostname}/api/trivia_items?&limit=2`;
     const request = axios.get(ROOT_URL);
 
     request.then((response) => {
