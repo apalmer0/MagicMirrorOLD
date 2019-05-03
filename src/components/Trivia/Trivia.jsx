@@ -24,6 +24,7 @@ class Trivia extends Component {
           const {
             answer,
             category,
+            guess,
             question,
             status,
             value,
@@ -37,9 +38,15 @@ class Trivia extends Component {
               </div>
               <div style={questionStyles}>{question}</div>
               {status !== 'unanswered' && (
-                <div style={answerContainerStyles}>
-                  <span style={statusStyles}>{startCase(status)}: </span>
-                  <span>{answer}</span>
+                <div>
+                  <div style={answerContainerStyles}>
+                    <span style={statusStyles}>{startCase(status)}: </span>
+                    <span>{guess}</span>
+                  </div>
+                  <div style={answerContainerStyles}>
+                    <span style={statusStyles}>Correct answer: </span>
+                    <span>{answer}</span>
+                  </div>
                 </div>
               )}
             </div>
@@ -54,6 +61,7 @@ Trivia.propTypes = {
   triviaItems: arrayOf(shape({
     answer: string,
     category: string,
+    guess: string,
     question: string,
     status: string,
     value: number,
