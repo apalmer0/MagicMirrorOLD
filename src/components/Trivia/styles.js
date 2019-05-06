@@ -10,17 +10,13 @@ export default {
     marginRight: '40px',
     textDecoration: 'underline',
   },
-  valueStyles: {
-    fontWeight: 'bold',
-  },
   questionStyles: {
     fontStyle: 'italic',
   },
   answerContainerStyles: {
     marginTop: '5px',
   },
-  statusStyles: {
-    fontWeight: 'bold',
-    fontSize: '20px',
+  difficultyStyles: {
+    fontSize: '18px',
   },
 };

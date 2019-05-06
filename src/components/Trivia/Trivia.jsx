@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { arrayOf, number, shape, string } from 'prop-types';
+import { arrayOf, shape, string } from 'prop-types';
 import { connect } from 'react-redux';
 import { startCase } from 'lodash';
 
@@ -11,10 +11,9 @@ class Trivia extends Component {
       answerContainerStyles,
       categoryStyles,
       containerStyles,
+      difficultyStyles,
       headerStyles,
       questionStyles,
-      statusStyles,
-      valueStyles,
     } = styles;
     const { triviaItems } = this.props;
 
@@ -22,36 +21,35 @@ class Trivia extends Component {
       <div>
         {triviaItems.map((item) => {
           const {
-            answer,
             category,
-            guess,
+            correct_answer: correctAnswer,
+            difficulty,
+            incorrect_answers: incorrectAnswers,
             question,
-            status,
-            value,
           } = item;
 
           return (
             <div key={question} style={containerStyles}>
               <div style={headerStyles}>
                 <span style={categoryStyles}>{startCase(category)}</span>
-                <span style={valueStyles}>${value}</span>
+                <span style={difficultyStyles}>({difficulty})</span>
               </div>
               <div style={questionStyles}>{question}</div>
-              {status !== 'unanswered' && (
-                <div>
-                  <div style={answerContainerStyles}>
-                    <span style={statusStyles}>{startCase(status)}: </span>
-                    <span>{guess}</span>
-                  </div>
-                  <div style={answerContainerStyles}>
-                    <span style={statusStyles}>Correct answer: </span>
-                    <span>{answer}</span>
-                  </div>
+              <div>
+                <div style={answerContainerStyles}>
+                  <div>{correctAnswer}</div>
+                  {incorrectAnswers.map(answer => <div key={answer}>{answer}</div>)}
                 </div>
-              )}
+              </div>
             </div>
           );
         })}
+        <div>
+          To play, say &quot;Hey Google - Answer: C&quot; or &quot;Hey Google - Answer: True&quot;
+        </div>
+        <div>
+          Don&apos;t know the answer? Just guess, or say &quot;Hey Google - new question&quot;
+        </div>
       </div>
     );
   }
@@ -59,12 +57,13 @@ class Trivia extends Component {
 
 Trivia.propTypes = {
   triviaItems: arrayOf(shape({
-    answer: string,
     category: string,
+    correct_answer: string,
+    difficulty: string,
     guess: string,
+    incorrect_answers: arrayOf(string),
     question: string,
     status: string,
-    value: number,
   })),
 };
 
