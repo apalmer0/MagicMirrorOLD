@@ -12,11 +12,15 @@ export default {
   },
   questionStyles: {
     fontStyle: 'italic',
+    marginRight: '20px',
   },
   answerContainerStyles: {
     marginTop: '5px',
   },
   difficultyStyles: {
-    fontSize: '18px',
+    fontSize: '12px',
+  },
+  statusStyles: {
+    fontWeight: 'bold',
   },
 };

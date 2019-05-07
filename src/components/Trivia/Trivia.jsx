@@ -6,14 +6,46 @@ import { startCase } from 'lodash';
 import styles from './styles';
 
 class Trivia extends Component {
+  multipleChoice = (item) => {
+    const { options } = item;
+    const letters = Object.keys(options);
+    const { answerContainerStyles } = styles;
+
+    return (
+      letters.map(letter => (
+        <div style={answerContainerStyles} key={letter}>
+          <span>{letter}: </span>
+          <span>{options[letter]}</span>
+        </div>
+      ))
+    );
+  }
+
+  trueFalse = (item) => {
+    const { answerContainerStyles } = styles;
+    const {
+      correct_answer: correctAnswer,
+      incorrect_answers: incorrectAnswers,
+    } = item;
+    const answers = [
+      ...incorrectAnswers,
+      correctAnswer,
+    ];
+
+    return (
+      answers.map(answer => (
+        <div style={answerContainerStyles} key={answer}>{answer}</div>
+      ))
+    );
+  }
   render () {
     const {
-      answerContainerStyles,
       categoryStyles,
       containerStyles,
       difficultyStyles,
       headerStyles,
       questionStyles,
+      statusStyles,
     } = styles;
     const { triviaItems } = this.props;
 
@@ -22,24 +54,29 @@ class Trivia extends Component {
         {triviaItems.map((item) => {
           const {
             category,
-            correct_answer: correctAnswer,
             difficulty,
-            incorrect_answers: incorrectAnswers,
+            question_type: questionType,
             question,
+            status,
           } = item;
+          const trueFalse = questionType === 'boolean';
+          const multipleChoice = questionType === 'multiple';
 
           return (
             <div key={question} style={containerStyles}>
               <div style={headerStyles}>
                 <span style={categoryStyles}>{startCase(category)}</span>
+                {status !== 'unanswered' && (
+                  <span style={statusStyles}>{startCase(status)}!</span>
+                )}
+              </div>
+              <div>
+                <span style={questionStyles}>{question}</span>
                 <span style={difficultyStyles}>({difficulty})</span>
               </div>
-              <div style={questionStyles}>{question}</div>
               <div>
-                <div style={answerContainerStyles}>
-                  <div>{correctAnswer}</div>
-                  {incorrectAnswers.map(answer => <div key={answer}>{answer}</div>)}
-                </div>
+                {trueFalse && this.trueFalse(item)}
+                {multipleChoice && this.multipleChoice(item)}
               </div>
             </div>
           );
