@@ -1,3 +1,6 @@
+const red = '#cc0000';
+const green = '#00cc00';
+
 export default {
   containerStyles: {
     marginBottom: '40px',
@@ -22,5 +25,21 @@ export default {
   },
   statusStyles: {
     fontWeight: 'bold',
+  },
+  guessStyle: {
+    color: red,
+  },
+  correctStyle: {
+    color: green,
+    fontSize: '20px',
+  },
+  tipsStyle: {
+    fontSize: '14px',
+  },
+  greenStyle: {
+    color: green,
+  },
+  redStyle: {
+    color: red,
   },
 };

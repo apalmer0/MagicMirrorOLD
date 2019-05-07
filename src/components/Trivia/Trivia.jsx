@@ -7,35 +7,64 @@ import styles from './styles';
 
 class Trivia extends Component {
   multipleChoice = (item) => {
-    const { options } = item;
+    const {
+      correct_letter: correctLetter,
+      guess,
+      options,
+      status,
+    } = item;
     const letters = Object.keys(options);
-    const { answerContainerStyles } = styles;
+    const { answerContainerStyles, correctStyle, guessStyle } = styles;
+    const answered = status !== 'unanswered';
 
     return (
-      letters.map(letter => (
-        <div style={answerContainerStyles} key={letter}>
-          <span>{letter}: </span>
-          <span>{options[letter]}</span>
-        </div>
-      ))
+      letters.map((letter) => {
+        const guessed = guess && guess.toUpperCase() === letter;
+        const correct = answered && correctLetter && correctLetter.toUpperCase() === letter;
+        const style = {
+          ...answerContainerStyles,
+          ...guessed ? guessStyle : {},
+          ...correct ? correctStyle : {},
+        };
+
+        return (
+          <div style={style} key={letter}>
+            <span>{letter}: </span>
+            <span>{options[letter]}</span>
+          </div>
+        );
+      })
     );
   }
 
   trueFalse = (item) => {
-    const { answerContainerStyles } = styles;
     const {
       correct_answer: correctAnswer,
+      guess,
       incorrect_answers: incorrectAnswers,
+      status,
     } = item;
-    const answers = [
+    const answerOptions = [
       ...incorrectAnswers,
       correctAnswer,
     ];
+    const answered = status !== 'unanswered';
+    const { answerContainerStyles, correctStyle, guessStyle } = styles;
 
     return (
-      answers.map(answer => (
-        <div style={answerContainerStyles} key={answer}>{answer}</div>
-      ))
+      answerOptions.map((answerOption) => {
+        const guessed = guess === answerOption;
+        const correct = answered && guess === correctAnswer;
+        const style = {
+          ...answerContainerStyles,
+          ...guessed ? guessStyle : {},
+          ...correct ? correctStyle : {},
+        };
+
+        return (
+          <div style={style} key={answerOption}>{answerOption}</div>
+        );
+      })
     );
   }
   render () {
@@ -43,9 +72,12 @@ class Trivia extends Component {
       categoryStyles,
       containerStyles,
       difficultyStyles,
+      greenStyle,
       headerStyles,
       questionStyles,
+      redStyle,
       statusStyles,
+      tipsStyle,
     } = styles;
     const { triviaItems } = this.props;
 
@@ -61,13 +93,18 @@ class Trivia extends Component {
           } = item;
           const trueFalse = questionType === 'boolean';
           const multipleChoice = questionType === 'multiple';
+          const statusStyle = {
+            ...statusStyles,
+            ...(status === 'correct') ? greenStyle : {},
+            ...(status === 'incorrect') ? redStyle : {},
+          };
 
           return (
             <div key={question} style={containerStyles}>
               <div style={headerStyles}>
                 <span style={categoryStyles}>{startCase(category)}</span>
                 {status !== 'unanswered' && (
-                  <span style={statusStyles}>{startCase(status)}!</span>
+                  <span style={statusStyle}>{startCase(status)}!</span>
                 )}
               </div>
               <div>
@@ -81,11 +118,13 @@ class Trivia extends Component {
             </div>
           );
         })}
-        <div>
-          To play, say &quot;Hey Google - Answer: C&quot; or &quot;Hey Google - Answer: True&quot;
-        </div>
-        <div>
-          Don&apos;t know the answer? Just guess, or say &quot;Hey Google - new question&quot;
+        <div style={tipsStyle}>
+          <div>
+            To play, say &quot;Hey Google - Answer: C&quot; or &quot;Hey Google - Answer: True&quot;
+          </div>
+          <div>
+            Don&apos;t know the answer? Just guess, or say &quot;Hey Google - new question&quot;
+          </div>
         </div>
       </div>
     );
