@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { arrayOf, shape, string } from 'prop-types';
+import { arrayOf, number, shape, string } from 'prop-types';
 import { connect } from 'react-redux';
 import { startCase } from 'lodash';
 
@@ -79,10 +79,24 @@ class Trivia extends Component {
       statusStyles,
       tipsStyle,
     } = styles;
-    const { triviaItems } = this.props;
+    const { triviaItems, triviaStats } = this.props;
+    const { today, all_time: allTime } = triviaStats;
+    const todayStats = Math.round(today * 100);
+    const allTimeStats = Math.round(allTime * 100);
 
     return (
       <div>
+        <div>
+          <div>Stats:</div>
+          <span>
+            <span>Today: </span>
+            <span>{todayStats}%</span>
+          </span>
+          <span>
+            <span> All Time: </span>
+            <span>{allTimeStats}%</span>
+          </span>
+        </div>
         {triviaItems.map((item) => {
           const {
             category,
@@ -141,16 +155,24 @@ Trivia.propTypes = {
     question: string,
     status: string,
   })),
+  triviaStats: shape({
+    today: number,
+    all_time: number,
+  }),
 };
 
 Trivia.defaultProps = {
   triviaItems: [],
+  triviaStats: {
+    today: 0,
+    all_time: 0,
+  },
 };
 
 const mapStateToProps = (state) => {
-  const { triviaItems } = state.app;
+  const { triviaItems, triviaStats } = state.app;
 
-  return { triviaItems };
+  return { triviaItems, triviaStats };
 };
 
 export default connect(mapStateToProps)(Trivia);

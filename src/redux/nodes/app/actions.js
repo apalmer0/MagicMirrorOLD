@@ -76,6 +76,20 @@ const fetchTriviaItems = () => {
   };
 };
 
+const fetchTriviaStats = () => {
+  return (dispatch) => {
+    const ROOT_URL = `${hostname}/api/trivia_item_stats`;
+    const request = axios.get(ROOT_URL);
+
+    request.then((response) => {
+      dispatch({
+        type: actionTypes.FETCH_TRIVIA_STATS,
+        payload: response,
+      });
+    });
+  };
+};
+
 const fetchGoogleImages = () => {
   return (dispatch) => {
     const ROOT_URL = `${hostname}/api/images?image_source=google`;
@@ -94,6 +108,7 @@ export default {
   fetchGoogleImages,
   fetchTodoItems,
   fetchTriviaItems,
+  fetchTriviaStats,
   fetchWeather,
   login,
   logout,

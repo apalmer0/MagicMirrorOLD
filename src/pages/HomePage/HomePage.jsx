@@ -19,6 +19,7 @@ class HomePage extends Component {
     this.getGoogleImages();
     this.getTodoList();
     this.getTrivia();
+    this.getTriviaStats();
     this.getWeather();
   }
 
@@ -26,6 +27,7 @@ class HomePage extends Component {
     global.window.setInterval(() => this.getGoogleImages(), FIVE_SECONDS);
     global.window.setInterval(() => this.getTodoList(), FIVE_SECONDS);
     global.window.setInterval(() => this.getTrivia(), FIVE_SECONDS);
+    global.window.setInterval(() => this.getTriviaStats(), FIVE_SECONDS);
     global.window.setInterval(() => this.getWeather(), ONE_HOUR);
   }
 
@@ -39,6 +41,10 @@ class HomePage extends Component {
 
   getTrivia = () => (
     this.props.dispatch(actions.fetchTriviaItems())
+  )
+
+  getTriviaStats = () => (
+    this.props.dispatch(actions.fetchTriviaStats())
   )
 
   getWeather = () => (

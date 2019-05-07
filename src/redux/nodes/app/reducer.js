@@ -44,6 +44,11 @@ export default (state = initialState, action) => {
         ...state,
         triviaItems: action.payload.data,
       };
+    case actionTypes.FETCH_TRIVIA_STATS:
+      return {
+        ...state,
+        triviaStats: action.payload.data,
+      };
     case actionTypes.FETCH_WEATHER:
       return {
         ...state,
