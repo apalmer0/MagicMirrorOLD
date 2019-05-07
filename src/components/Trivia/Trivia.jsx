@@ -53,8 +53,8 @@ class Trivia extends Component {
 
     return (
       answerOptions.map((answerOption) => {
-        const guessed = guess === answerOption;
-        const correct = answered && guess === correctAnswer;
+        const guessed = startCase(guess) === answerOption;
+        const correct = answered && startCase(guess) === correctAnswer;
         const style = {
           ...answerContainerStyles,
           ...guessed ? guessStyle : {},
