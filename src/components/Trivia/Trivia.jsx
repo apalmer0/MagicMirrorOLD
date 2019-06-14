@@ -84,6 +84,12 @@ class Trivia extends Component {
     const todayStats = Math.round(today * 100);
     const allTimeStats = Math.round(allTime * 100);
 
+    if (triviaItems.length === 0) return false;
+
+    const lastQuestion = triviaItems[1];
+    const { streak_count: streakCount } = triviaItems[0] || 0;
+    const streakType = lastQuestion.status === 'incorrect' ? 'incorrect' : 'correct';
+
     return (
       <div>
         <div>
@@ -95,6 +101,10 @@ class Trivia extends Component {
           <span>
             <span> All Time: </span>
             <span>{allTimeStats}%</span>
+          </span>
+          <span>
+            <span> Streak: </span>
+            <span>{streakCount} answers {streakType}</span>
           </span>
         </div>
         {triviaItems.map((item) => {
