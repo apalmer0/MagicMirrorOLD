@@ -33,10 +33,6 @@ export default {
     color: green,
     fontSize: '20px',
   },
-  tipsStyle: {
-    fontSize: '14px',
-    marginBottom: '40px',
-  },
   greenStyle: {
     color: green,
   },
