@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { startCase } from 'lodash';
 
 import styles from './styles';
+import Stats from '../Stats';
 
 class Trivia extends Component {
   multipleChoice = (item) => {
@@ -67,6 +68,7 @@ class Trivia extends Component {
       })
     );
   }
+
   render () {
     const {
       categoryStyles,
@@ -80,32 +82,16 @@ class Trivia extends Component {
       tipsStyle,
     } = styles;
     const { triviaItems, triviaStats } = this.props;
-    const { today, all_time: allTime } = triviaStats;
-    const todayStats = Math.round(today * 100);
-    const allTimeStats = Math.round(allTime * 100);
-
-    if (triviaItems.length === 0) return false;
-
-    const lastQuestion = triviaItems[1];
-    const { streak_count: streakCount } = triviaItems[0] || 0;
-    const streakType = lastQuestion.status === 'incorrect' ? 'incorrect' : 'correct';
 
     return (
       <div>
-        <div>
-          <div>Stats:</div>
-          <span>
-            <span>Today: </span>
-            <span>{todayStats}%</span>
-          </span>
-          <span>
-            <span> All Time: </span>
-            <span>{allTimeStats}%</span>
-          </span>
-          <span>
-            <span> Streak: </span>
-            <span>{streakCount} answers {streakType}</span>
-          </span>
+        <div style={tipsStyle}>
+          <div>
+            To play, say &quot;Hey Google - Answer: C&quot; or &quot;Hey Google - Answer: True&quot;
+          </div>
+          <div>
+            Don&apos;t know the answer? Just guess, or say &quot;Hey Google - new question&quot;
+          </div>
         </div>
         {triviaItems.map((item) => {
           const {
@@ -142,14 +128,7 @@ class Trivia extends Component {
             </div>
           );
         })}
-        <div style={tipsStyle}>
-          <div>
-            To play, say &quot;Hey Google - Answer: C&quot; or &quot;Hey Google - Answer: True&quot;
-          </div>
-          <div>
-            Don&apos;t know the answer? Just guess, or say &quot;Hey Google - new question&quot;
-          </div>
-        </div>
+        <Stats triviaItems={triviaItems} triviaStats={triviaStats} />
       </div>
     );
   }
